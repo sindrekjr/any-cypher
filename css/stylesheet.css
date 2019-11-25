@@ -1,0 +1,23 @@
+body * {
+    display: flex;
+}
+
+header, .textarea {
+    flex-direction: column;
+}
+
+main, .alphabet {
+    flex-direction: row;
+}
+
+header {
+    align-items: center;
+}
+
+main, .textarea {
+    justify-content: space-around;
+}
+
+.alphabet {
+    flex-wrap: wrap;
+}
