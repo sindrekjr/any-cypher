@@ -1,23 +1,66 @@
-body * {
+/*** BASELINE ***/
+body, body * {
     display: flex;
-}
-
-header, .textarea {
     flex-direction: column;
 }
 
-main, .alphabet {
+nav, main section {
     flex-direction: row;
 }
 
-header {
-    align-items: center;
+html, body, main {
+    height: 100%; 
+    padding: 0;
+    margin: 0; 
 }
 
-main, .textarea {
-    justify-content: space-around;
+.wrapper, header {
+    padding: 10px;
 }
 
-.alphabet {
-    flex-wrap: wrap;
+.wrapper, header, nav {
+    align-items: center;   
+}
+
+header, main {
+    width: 100%;
+}
+
+
+/*** GENERAL RULES ***/
+.wrapper, .text-section > div, .input {
+    flex: 1;
+}
+
+header, main {
+    max-width: 928px;
+}
+
+nav input {
+    display: none;
+}
+
+main section {
+    justify-content: center;
+    padding: 10px; 
+}
+
+textarea {
+    resize: none;
+}
+
+
+/*** SPECIFIC RULES ***/
+.select, .title {
+    text-align: center;
+}
+
+.select, textarea { 
+    border-radius: 2px;
+    border: 1px solid grey;
+    padding: 5px; 
+}
+
+.select, .input {
+    margin: 0 10px; 
 }
