@@ -4,7 +4,7 @@ body, body * {
     flex-direction: column;
 }
 
-nav, main section {
+nav, .text-section, .alphabet-section, .letter {
     flex-direction: row;
 }
 
@@ -18,17 +18,22 @@ html, body, main {
     padding: 10px;
 }
 
-.wrapper, header, nav {
-    align-items: center;   
+.wrapper, header, nav, form {
+    align-items: center;
+    justify-content: space-around;
 }
 
 header, main {
     width: 100%;
 }
 
+nav, section {
+    flex-wrap: wrap;
+}
+
 
 /*** GENERAL RULES ***/
-.wrapper, .text-section > div, .input {
+.wrapper, .text-section, #in, #out, .input {
     flex: 1;
 }
 
@@ -40,8 +45,8 @@ nav input {
     display: none;
 }
 
-main section {
-    justify-content: center;
+.text-section {
+    max-height: 150px;
     padding: 10px; 
 }
 
@@ -63,4 +68,22 @@ textarea {
 
 .select, .input {
     margin: 0 10px; 
+}
+
+.alphabet-section {
+    justify-content: flex-start;
+    max-width: 850px;
+}
+
+.letter {
+    justify-content: space-between;
+    margin: 10px; 
+    width: 50px; 
+}
+
+.letter input {
+    height: 10px;
+    width: 25px;
+    margin: 5px; 
+    padding: 4px; 
 }

@@ -14,11 +14,12 @@ function selectCypher(name) {
         $('#out .title').html(selected);
     }
     generateAlphabet(); 
+    updateText();
 }
 
 function addInputListeners() {
-    $('#in .input').on('keyup', () => changeText('out'));
-    $('#out .input').on('keyup', () => changeText('in')); 
+    $('#in .input').on('keyup', () => updateText('out'));
+    $('#out .input').on('keyup', () => updateText('in')); 
 }
 
 function initializeNav() {
@@ -62,20 +63,12 @@ function updateOpacity() {
 
 function generateAlphabet() {
     let form = $('.alphabet-section').empty();
-    let i = 0;
-    let div;
     for(let letter in cypher) {
-        if(i % 3 === 0) {
-            if(div) form.append(div);
-            div = $('<div>');
-        }
-        div.append(
-            $('<label class=alphabet>').append(letter).append(
+        form.append(
+            $('<label class=letter>').append(letter).append(
                 $('<input name=' + letter + '>').val(cypher[letter])
             ).on('keyup', (event) => changeCypher(event))
         );
-
-        i++; 
     }
 }
 
@@ -86,13 +79,13 @@ function flipObjectValues(obj) {
 }
 
 function changeCypher(event) {
-    if(event.currentTarget.classList.contains('alphabet')) {
+    if(event.currentTarget.classList.contains('letter')) {
         cypher[event.target.name] = event.target.value;
     }
-    changeText();
+    updateText();
 }
 
-function changeText(field = 'out') {
+function updateText(field = 'out') {
     if(field === 'out') {
         $('#out .input').val(translate($('#in .input').val(), cypher));
     } else {
