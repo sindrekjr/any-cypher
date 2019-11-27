@@ -17,13 +17,8 @@ function selectCypher(name) {
 }
 
 function addInputListeners() {
-    $('#in .input').on('keyup', function() {
-        $('#out .input').val(translate(this.value, cypher));
-    });
-
-    $('#out .input').on('keyup', function() {
-        $('#in .input').val(translate(this.value, flipObjectValues(cypher)));
-    });
+    $('#in .input').on('keyup', () => changeText('out'));
+    $('#out .input').on('keyup', () => changeText('in')); 
 }
 
 function initializeNav() {
@@ -91,13 +86,14 @@ function flipObjectValues(obj) {
 }
 
 function changeCypher(event) {
-    let out = false; 
     if(event.currentTarget.classList.contains('alphabet')) {
         cypher[event.target.name] = event.target.value;
-        out = true; 
     }
+    changeText();
+}
 
-    if(out || event.currentTarget.id == 'in') {
+function changeText(field = 'out') {
+    if(field === 'out') {
         $('#out .input').val(translate($('#in .input').val(), cypher));
     } else {
         $('#in .input').val(translate($('#out .input').val(), flipObjectValues(cypher)));
