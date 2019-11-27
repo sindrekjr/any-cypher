@@ -66,18 +66,42 @@ function updateOpacity() {
 }
 
 function generateAlphabet() {
-    let form = $('<form>'); 
+    let form = $('.alphabet-section').empty();
+    let i = 0;
+    let div;
     for(let letter in cypher) {
-        form.append($('<input>').val(letter));
+        if(i % 3 === 0) {
+            if(div) form.append(div);
+            div = $('<div>');
+        }
+        div.append(
+            $('<label class=alphabet>').append(letter).append(
+                $('<input name=' + letter + '>').val(cypher[letter])
+            ).on('keyup', (event) => changeCypher(event))
+        );
+
+        i++; 
     }
-    
-    $('.alphabet-section').html(form);
 }
 
 function flipObjectValues(obj) {
     let flipped = {}
     for(let key in obj) flipped[obj[key]] = key;
     return flipped; 
+}
+
+function changeCypher(event) {
+    let out = false; 
+    if(event.currentTarget.classList.contains('alphabet')) {
+        cypher[event.target.name] = event.target.value;
+        out = true; 
+    }
+
+    if(out || event.currentTarget.id == 'in') {
+        $('#out .input').val(translate($('#in .input').val(), cypher));
+    } else {
+        $('#in .input').val(translate($('#out .input').val(), flipObjectValues(cypher)));
+    }
 }
 
 function translate(text, cypher) {
