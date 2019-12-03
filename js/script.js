@@ -85,6 +85,21 @@ function changeCypher(event) {
     updateText();
 }
 
+function objectsAreEqual(a, b) {
+    let initialValues = Object.keys(cyphers[selected]),
+        currentValues = Object.keys(cypher);
+
+    if(initialValues.length !== currentValues.length) {
+        return false;
+    } else {
+        for(let key in initialValues) {
+            if(initialValues[key] !== currentValues.length) return false;
+        }
+    }
+
+    return true;
+}
+
 function updateText(field = 'out') {
     if(field === 'out') {
         $('#out .input').val(translate($('#in .input').val(), cypher));
