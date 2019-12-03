@@ -1,25 +1,31 @@
-let ignoreBracket = "[]"; 
-let selected, cypher; 
+let ignoreBracket = "[]";
+let selected, cypher;
 
-$().ready(() => {
-    selectCypher(Object.keys(cyphers)[0]); 
-    addInputListeners();
+$().ready(() => initialize());
+
+function initialize() {
+    selectCypher(Object.keys(cyphers)[0]);
     initializeNav();
-});
+    addInputListeners();
+}
 
 function selectCypher(name) {
     if(name) {
-        selected = name; 
+        selected = name;
         cypher = cyphers[selected];
         $('#out .title').html(selected);
+        generateAlphabet();
+        updateText(); 
     }
-    generateAlphabet(); 
-    updateText();
 }
 
 function addInputListeners() {
     $('#in .input').on('keyup', () => updateText('out'));
-    $('#out .input').on('keyup', () => updateText('in')); 
+    $('#out .input').on('keyup', () => updateText('in'));
+
+    $('#save').on('click', (event) => saveCypher(event));
+    $('#upload').on('click', (event) => uploadCypher(event));
+    $('#download').on('click', (event) => downloadCypher(event));
 }
 
 function initializeNav() {
@@ -36,7 +42,7 @@ function initializeNav() {
     $('input[type=radio][name=cypher]').change(function() {
         if(selected != this.value) {
             selectCypher(this.value);
-            updateOpacity(); 
+            updateOpacity();
         }
     });
 
@@ -48,7 +54,7 @@ function getColourFromString(str) {
     for (var i = 0; i < str.length; i++) {
        hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
-    
+
     let c = (hash & 0x00FFFF).toString(12).toUpperCase();
     return "00000".substring(0, 6 - c.length) + c;
 }
@@ -56,7 +62,7 @@ function getColourFromString(str) {
 function updateOpacity() {
     $('.select').each(function() {
         let input = $(this).children()[0];
-        if(input.value === selected) input.checked = true; 
+        if(input.value === selected) input.checked = true;
         this.style.opacity = ($(this).children()[0].checked) ? 1.0 : 0.8;
     });
 }
@@ -75,7 +81,7 @@ function generateAlphabet() {
 function flipObjectValues(obj) {
     let flipped = {}
     for(let key in obj) flipped[obj[key]] = key;
-    return flipped; 
+    return flipped;
 }
 
 function changeCypher(event) {
@@ -109,24 +115,24 @@ function updateText(field = 'out') {
 }
 
 function translate(text, cypher) {
-    let ignore = false; 
+    let ignore = false;
     let translated = "";
     for(let i = 0; i < text.length; i++) {
         let c = text[i];
-        let upper = !$.isNumeric(c) && c == c.toUpperCase(); 
-        if(ignoreBracket.includes(c)) ignore = !ignore; 
+        let upper = !$.isNumeric(c) && c == c.toUpperCase();
+        if(ignoreBracket.includes(c)) ignore = !ignore;
 
         if(ignore) {
-            translated += c; 
+            translated += c;
         } else {
             if(upper) {
-                translated += (cypher[c.toLowerCase()] || c).toUpperCase(); 
+                translated += (cypher[c.toLowerCase()] || c).toUpperCase();
             } else {
-                translated += (cypher[c.toLowerCase()] || c); 
+                translated += (cypher[c.toLowerCase()] || c);
             }
         }
     }
-    return translated; 
+    return translated;
 }
 
 const cyphers = {
@@ -167,10 +173,10 @@ const cyphers = {
         "f":"ph",
         "g":"6",
         "h":"|-|",
-        "i":"1",
+        "i":"!",
         "j":"j",
         "k":"|<",
-        "l":"l",
+        "l":"1",
         "m":"^^",
         "n":"|\\|",
         "o":"0",
@@ -186,4 +192,16 @@ const cyphers = {
         "y":"'/",
         "z":"2"
     }
+}
+
+function saveCypher(event) {
+    console.log(event);
+}
+
+function uploadCypher(event) {
+    console.log(event);
+}
+
+function downloadCypher(event, all = false) {
+    console.log(event);
 }

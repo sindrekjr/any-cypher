@@ -4,7 +4,7 @@ body, body * {
     flex-direction: column;
 }
 
-nav, .text-section, .alphabet-section, .letter {
+nav, section, .letter {
     flex-direction: row;
 }
 
@@ -45,17 +45,6 @@ nav input {
     display: none;
 }
 
-.text-section {
-    max-height: 150px;
-    padding: 10px; 
-}
-
-textarea {
-    resize: none;
-}
-
-
-/*** SPECIFIC RULES ***/
 .select, .title {
     text-align: center;
 }
@@ -70,6 +59,17 @@ textarea {
     margin: 0 10px; 
 }
 
+.text-section {
+    max-height: 150px;
+    padding: 10px; 
+}
+
+textarea {
+    resize: none;
+}
+
+
+/*** SPECIFIC RULES ***/
 .alphabet-section {
     justify-content: flex-start;
     max-width: 850px;
@@ -86,4 +86,8 @@ textarea {
     width: 25px;
     margin: 5px; 
     padding: 4px; 
+}
+
+.buttons {
+    justify-content: space-between;
 }
