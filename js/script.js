@@ -36,7 +36,7 @@ function addInputListeners() {
     $('#in .input').on('keyup', () => updateText('out'));
     $('#out .input').on('keyup', () => updateText('in'));
 
-    $('#save').on('click', (event) => saveCypher(event));
+    $('#save').on('click', (event) => saveCypher(event, $('#name').val()));
     $('#upload').on('click', (event) => uploadCypher(event));
     $('#download').on('click', (event) => downloadCypher(event));
 }
@@ -115,8 +115,10 @@ function updateButtonVisibility() {
     }
 
     if(isActuallyNew) {
+        $('#name').show();
         $('#save').show(); 
     } else {
+        $('#name').hide();
         $('#save').hide(); 
     }
 }
