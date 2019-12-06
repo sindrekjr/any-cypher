@@ -29,6 +29,7 @@ function addInputListeners() {
 }
 
 function initializeNav() {
+    $('nav').empty(); 
     for(let c in cyphers) {
         $('nav').append(
             $('<label class=select>').css({
@@ -194,9 +195,24 @@ const cyphers = {
     }
 }
 
-function saveCypher(event) {
-    
-    
+function saveCypher(event, name = "") {
+    let form = $('.letter input');
+    let mapped = {}; 
+    for(let key in form) {
+        if(parseInt(key) || key == 0) {
+            mapped[form[key]['name']] = form[key]['value'];
+        }
+    }
+
+    if(name) {
+        cyphers[name] = mapped; 
+    } else {
+        for(let key in mapped) {
+            name += mapped[key];
+        }
+        cyphers[name.substr(0,10)] = mapped; 
+    }
+    initializeNav(); 
 }
 
 function uploadCypher(event) {
