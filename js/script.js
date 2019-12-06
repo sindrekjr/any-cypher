@@ -7,6 +7,7 @@ function initialize() {
     selectCypher(Object.keys(cyphers)[0]);
     initializeNav();
     addInputListeners();
+    updateButtonVisibility();
 }
 
 function selectCypher(name) {
@@ -17,6 +18,18 @@ function selectCypher(name) {
         generateAlphabet();
         updateText(); 
     }
+}
+
+function changeCypher(event) {
+    if(event.currentTarget.classList.contains('letter')) {
+        cypher[event.target.name] = event.target.value;
+    }
+}
+
+function updateCypher() {
+    cypher = parseInputFields();
+    updateButtonVisibility();
+    updateText(); 
 }
 
 function addInputListeners() {
@@ -74,7 +87,7 @@ function generateAlphabet() {
         form.append(
             $('<label class=letter>').append(letter).append(
                 $('<input name=' + letter + '>').val(cypher[letter])
-            ).on('keyup', (event) => changeCypher(event))
+            ).on('keyup', (event) => updateCypher())
         );
     }
 }
@@ -85,34 +98,38 @@ function flipObjectValues(obj) {
     return flipped;
 }
 
-function changeCypher(event) {
-    if(event.currentTarget.classList.contains('letter')) {
-        cypher[event.target.name] = event.target.value;
-    }
-    updateText();
-}
-
-function objectsAreEqual(a, b) {
-    let initialValues = Object.keys(cyphers[selected]),
-        currentValues = Object.keys(cypher);
-
-    if(initialValues.length !== currentValues.length) {
-        return false;
-    } else {
-        for(let key in initialValues) {
-            if(initialValues[key] !== currentValues.length) return false;
-        }
-    }
-
-    return true;
-}
-
 function updateText(field = 'out') {
     if(field === 'out') {
         $('#out .input').val(translate($('#in .input').val(), cypher));
     } else {
         $('#in .input').val(translate($('#out .input').val(), flipObjectValues(cypher)));
     }
+}
+
+function updateButtonVisibility() {
+    let isActuallyNew = true; 
+    for(let c in cyphers) {
+        if(objectsAreEqual(cypher, cyphers[c])) {
+            isActuallyNew = false; 
+        }
+    }
+
+    if(isActuallyNew) {
+        $('#save').show(); 
+    } else {
+        $('#save').hide(); 
+    }
+}
+
+function objectsAreEqual(a, b) {
+    if(a.length != b.length) {
+        return false;
+    } else {
+        for(let key in a) {
+            if(a[key] != b[key]) return false;
+        }
+    }
+    return true;
 }
 
 function translate(text, cypher) {
@@ -134,6 +151,41 @@ function translate(text, cypher) {
         }
     }
     return translated;
+}
+
+function parseInputFields() {
+    let form = $('.letter input');
+    let mapped = {}; 
+    for(let key in form) {
+        if(parseInt(key) || key == 0) {
+            mapped[form[key]['name']] = form[key]['value'];
+        }
+    }
+    return mapped; 
+}
+
+function saveCypher(event, name = "") {
+    let input = parseInputFields(); 
+    if(name) {
+        cyphers[name] = input; 
+    } else {
+        for(let key in input) {
+            name += input[key];
+        }
+        cyphers[name.substr(0,10)] = input; 
+    }
+    initializeNav(); 
+}
+
+function uploadCypher(event) {
+    console.log(event);
+}
+
+function downloadCypher(event, name = 'cypher.json', all = false) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(parseInputFields())], { type:'text/json' }));
+    a.download = name;
+    a.click();
 }
 
 const cyphers = {
@@ -193,39 +245,4 @@ const cyphers = {
         "y":"'/",
         "z":"2"
     }
-}
-
-function parseInputFields() {
-    let form = $('.letter input');
-    let mapped = {}; 
-    for(let key in form) {
-        if(parseInt(key) || key == 0) {
-            mapped[form[key]['name']] = form[key]['value'];
-        }
-    }
-    return mapped; 
-}
-
-function saveCypher(event, name = "") {
-    let input = parseInputFields(); 
-    if(name) {
-        cyphers[name] = input; 
-    } else {
-        for(let key in input) {
-            name += input[key];
-        }
-        cyphers[name.substr(0,10)] = input; 
-    }
-    initializeNav(); 
-}
-
-function uploadCypher(event) {
-    console.log(event);
-}
-
-function downloadCypher(event, name = 'cypher.json', all = false) {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(parseInputFields())], { type:'text/json' }));
-    a.download = name;
-    a.click();
 }
