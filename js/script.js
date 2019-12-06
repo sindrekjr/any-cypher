@@ -195,13 +195,21 @@ const cyphers = {
 }
 
 function saveCypher(event) {
-    console.log(event);
+    
+    
 }
 
 function uploadCypher(event) {
     console.log(event);
 }
 
-function downloadCypher(event, all = false) {
-    console.log(event);
+function downloadCypher(event, name = 'cypher.json', all = false) {
+    let form = $('.letter input'); 
+    let mapped = {}; 
+    for(let key in form) mapped[form[key]['name']] = form[key]['value'];
+
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(mapped)], { type:'text/json' }));
+    a.download = name;
+    a.click();
 }
