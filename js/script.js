@@ -195,7 +195,7 @@ const cyphers = {
     }
 }
 
-function saveCypher(event, name = "") {
+function parseInputFields() {
     let form = $('.letter input');
     let mapped = {}; 
     for(let key in form) {
@@ -203,14 +203,18 @@ function saveCypher(event, name = "") {
             mapped[form[key]['name']] = form[key]['value'];
         }
     }
+    return mapped; 
+}
 
+function saveCypher(event, name = "") {
+    let input = parseInputFields(); 
     if(name) {
-        cyphers[name] = mapped; 
+        cyphers[name] = input; 
     } else {
-        for(let key in mapped) {
-            name += mapped[key];
+        for(let key in input) {
+            name += input[key];
         }
-        cyphers[name.substr(0,10)] = mapped; 
+        cyphers[name.substr(0,10)] = input; 
     }
     initializeNav(); 
 }
@@ -220,12 +224,8 @@ function uploadCypher(event) {
 }
 
 function downloadCypher(event, name = 'cypher.json', all = false) {
-    let form = $('.letter input'); 
-    let mapped = {}; 
-    for(let key in form) mapped[form[key]['name']] = form[key]['value'];
-
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(mapped)], { type:'text/json' }));
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(parseInputFields())], { type:'text/json' }));
     a.download = name;
     a.click();
 }
