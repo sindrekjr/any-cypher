@@ -31,9 +31,7 @@ nav input {
     appearance: checkbox;
 }
 
-.select, textarea { 
-    border: 1px solid #222;
-    border-radius: 1px;
+.select, .input { 
     padding: 3px; 
 }
 
@@ -42,8 +40,10 @@ nav input {
     height: auto;
 }
 
-textarea {
+.input, .letter input {
     background: #444; 
+    border: 1px solid #222;
+    border-radius: 1px;
     width: 99%;
     resize: none;
 }
