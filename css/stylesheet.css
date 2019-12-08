@@ -1,53 +1,26 @@
 /*** BASELINE ***/
 body, body * {
-    display: flex;
-    flex-direction: column;
     font-family: monospace;
 }
 
-nav, section, .letter {
-    flex-direction: row;
-}
-
-html, body, main {
-    height: 100%; 
+html, body {
     padding: 0;
     margin: 0; 
 }
 
-.wrapper, header {
+.wrapper {
     padding: 10px;
 }
 
-.wrapper, header, nav, form {
-    align-items: center;
-    justify-content: space-around;
+main, header {
+    float: left; 
+    max-width: 30%; 
+    
 }
-
-header, main {
-    width: 100%;
-}
-
-nav, section {
-    flex-wrap: wrap;
-}
-
 
 /*** GENERAL RULES ***/
-.wrapper, .text-section, #in, #out, .input {
-    flex: 1;
-}
-
-header, main {
-    max-width: 928px;
-}
-
 nav input {
     display: none;
-}
-
-.select, .input-head {
-    text-align: center;
 }
 
 .select, textarea { 
@@ -56,16 +29,15 @@ nav input {
     padding: 5px; 
 }
 
-.select, .input {
-    margin: 0 10px; 
-}
-
 .text-section {
-    max-height: 150px;
-    padding: 10px; 
+    width: auto; 
+    height: auto;
+    padding: 10px;
 }
 
 textarea {
+    width: 80%; 
+    height: 80%; 
     resize: none;
 }
 
@@ -73,15 +45,15 @@ textarea {
 /*** SPECIFIC RULES ***/
 .title {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    
 }
-.alphabet-section {
-    justify-content: flex-start;
-    max-width: 850px;
+
+.select, .letter {
+    display: inline-block;
+    margin: 10px; 
 }
 
 .letter {
-    justify-content: space-between;
+    display: inline-block;
     margin: 10px; 
     width: 50px; 
 }
@@ -91,8 +63,4 @@ textarea {
     width: 25px;
     margin: 5px; 
     padding: 4px; 
-}
-
-.buttons {
-    justify-content: space-between;
 }
