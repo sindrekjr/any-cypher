@@ -1,5 +1,7 @@
 /*** BASELINE ***/
 body, body * {
+    background: #000;
+    color: white;
     font-family: monospace;
 }
 
@@ -9,35 +11,40 @@ html, body {
 }
 
 .wrapper {
-    padding: 10px;
+    padding: 5px;
 }
 
 main, header {
     float: left; 
-    max-width: 30%; 
-    
+    max-width: 540px;
+    padding: 5px; 
+}
+
+header {
+    max-width: 300px;
 }
 
 /*** GENERAL RULES ***/
 nav input {
-    display: none;
+    -webkit-appearance: checkbox;
+    -moz-appearance:checkbox;
+    appearance: checkbox;
 }
 
 .select, textarea { 
-    border-radius: 2px;
-    border: 1px solid grey;
-    padding: 5px; 
+    border: 1px solid #222;
+    border-radius: 1px;
+    padding: 3px; 
 }
 
-.text-section {
+.text-section, .alphabet-section {
     width: auto; 
     height: auto;
-    padding: 10px;
 }
 
 textarea {
-    width: 80%; 
-    height: 80%; 
+    background: #444; 
+    width: 99%;
     resize: none;
 }
 
@@ -45,22 +52,24 @@ textarea {
 /*** SPECIFIC RULES ***/
 .title {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 10px 5px; 
 }
 
 .select, .letter {
     display: inline-block;
-    margin: 10px; 
+}
+
+.select {
+    margin: 5px;
 }
 
 .letter {
-    display: inline-block;
-    margin: 10px; 
     width: 50px; 
+    margin: 0 5px; 
 }
 
 .letter input {
     height: 10px;
     width: 25px;
-    margin: 5px; 
-    padding: 4px; 
+    margin: 5px;     
 }

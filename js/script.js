@@ -82,7 +82,7 @@ function updateOpacity() {
 }
 
 function generateAlphabet() {
-    let form = $('.alphabet-section').empty();
+    let form = $('.alphabet').empty();
     for(let letter in cypher) {
         form.append(
             $('<label class=letter>').append(letter).append(
