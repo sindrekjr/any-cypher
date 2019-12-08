@@ -14,7 +14,7 @@ function selectCypher(name) {
     if(name) {
         selected = name;
         cypher = cyphers[selected];
-        $('#out .title').html(selected);
+        $('#out .input-head').html(selected);
         generateAlphabet();
         updateText(); 
     }
