@@ -45,9 +45,7 @@ function initializeNav() {
     $('nav').empty(); 
     for(let c in cyphers) {
         $('nav').append(
-            $('<label class=select>').css({
-                'background-color': '#' + getColourFromString(c)
-            }).append(
+            $('<label class=select>').append(
                 $('<input type=radio name=cypher value="' + c + '">')
             ).append(c)
         );
@@ -56,11 +54,19 @@ function initializeNav() {
     $('input[type=radio][name=cypher]').change(function() {
         if(selected != this.value) {
             selectCypher(this.value);
-            updateOpacity();
+            updateColor();
         }
     });
 
-    updateOpacity();
+    updateColor();
+}
+
+function updateColor() {
+    $('.select').each(function() {
+        let input = $(this).children()[0];
+        if(input.value === selected) input.checked = true;
+        this.style.background = (input.checked) ? "#" + getColourFromString(input.value) : "#222";
+    });
 }
 
 function getColourFromString(str) {
@@ -71,14 +77,6 @@ function getColourFromString(str) {
 
     let c = (hash & 0x00FFFF).toString(12).toUpperCase();
     return "00000".substring(0, 6 - c.length) + c;
-}
-
-function updateOpacity() {
-    $('.select').each(function() {
-        let input = $(this).children()[0];
-        if(input.value === selected) input.checked = true;
-        this.style.opacity = ($(this).children()[0].checked) ? 1.0 : 0.8;
-    });
 }
 
 function generateAlphabet() {
