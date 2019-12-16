@@ -8,7 +8,7 @@ html, body {
 }
 
 html * {
-    color: white;
+    color: #fff;
     font-family: monospace;
 }
 
@@ -53,7 +53,7 @@ button {
 
 /*** SPECIFIC RULES ***/
 main {
-    max-width: 540px;
+    max-width: 420px;
     padding: 10px;
 }
 
@@ -65,8 +65,18 @@ main {
     box-shadow: inset 0 0 3px #2d2d2d;
 }
 
+.text-section > div {
+    margin: 8px 0; 
+}
+
+#c-title {
+    background: #3c3c3c;
+    border: none; 
+}
+
 .input {
     width: 99%;
+    height: 100px; 
     padding: 2px; 
     resize: none;
 }
