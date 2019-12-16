@@ -18,7 +18,7 @@ html * {
 
 
 /*** GENERAL RULES ***/
-.title, button {
+button {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     margin: 5px; 
 }
