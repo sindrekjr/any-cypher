@@ -14,7 +14,7 @@ function selectCypher(name) {
     if(name) {
         selected = name;
         cypher = cyphers[selected];
-        $('#out .input-head').val(selected);
+        $('#name').val(selected).prop('readonly', true).css('background', '#3c3c3c');
         generateAlphabet();
         updateText(); 
     }
@@ -113,10 +113,10 @@ function updateButtonVisibility() {
     }
 
     if(isActuallyNew) {
-        $('#name').show();
+        $('#name').prop('readonly', false).css('background', '#4c4c4c').val(''); 
         $('#save').show(); 
     } else {
-        $('#name').hide();
+        selectCypher(selected); 
         $('#save').hide(); 
     }
 }

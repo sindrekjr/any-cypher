@@ -36,7 +36,11 @@ nav input {
     height: auto;
 }
 
-.input, .alphabet-section input, button {
+.input-head {
+    margin: 1px; 
+}
+
+.input, .alphabet-section input {
     border: 1px solid #2d2d2d /*#252525*/;
 }
 
@@ -45,8 +49,9 @@ nav input {
     border-radius: 1px;
 }
 
-button {
+button, #save {
     background: #666; 
+    border: 1px solid #aaa;
     font-variant-caps: all-small-caps;
 }
 
@@ -69,7 +74,7 @@ main {
     margin: 8px 0; 
 }
 
-#c-title {
+#name {
     background: #3c3c3c;
     border: none; 
 }
