@@ -5,7 +5,9 @@ import Html exposing (Html, button, div, h1, input, nav, section, text, textarea
 import Html.Attributes exposing (autofocus, class, id, placeholder, readonly, value)
 import Html.Events exposing (onClick, onInput)
 import List exposing (map)
+import Alphabet exposing (alphabetForm)
 import Cypher exposing (Cypher, all, getRandomCypher, translate)
+import Msg exposing (Msg(..))
 import Stylesheet exposing (stylesheet)
 
 
@@ -35,9 +37,6 @@ init =
 
 
 -- UPDATE
-type Msg
-  = Change String | Select Cypher
-
 update : Msg -> Model -> Model
 update msg model =
   case msg of
@@ -63,11 +62,12 @@ view model =
       , cypherNav model.allCyphers
       ]
     , section [ class "right" ]
-        [ div [] 
-          [ input [] []
-          , textarea [ placeholder "Text to translate", value model.input, onInput Change, autofocus True ] []
+        [ section [ class "top" ]
+          [ inputField model
+          , outputField model.input model.cypher
           ]
-        , outputField model model.cypher
+        , section [ class "bottom" ]
+          [ alphabetForm model.cypher.cypher ]
         ]
     ]
 
@@ -79,9 +79,16 @@ cypherNav cyphers =
   nav [] (map (\cypher -> button [ onClick (Select cypher) ] [ text cypher.name ] ) cyphers)
 
 
-outputField : Model -> Cypher -> Html msg
-outputField model cypher =
+inputField : Model -> Html Msg
+inputField model =
   div []
-    [ input [ id "name", value cypher.name ] []
-    , textarea [ value (translate cypher.cypher model.input), readonly True ] []
+    [ input [ value "English", readonly True ] []
+    , textarea [ autofocus True, placeholder "Text to translate", value model.input, onInput Change] []
+    ]
+
+outputField : String -> Cypher -> Html Msg
+outputField inp cypher =
+  div []
+    [ input [ id "name", value cypher.name, readonly True ] []
+    , textarea [ value (translate cypher.cypher inp), readonly True ] []
     ]

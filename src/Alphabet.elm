@@ -1,20 +1,23 @@
-module Alphabet exposing (replace, view)
+module Alphabet exposing (alphabetForm)
 
-import Html.Attributes exposing (placeholder)
-import Html exposing (Html, div, h5, input, text)
+import Html.Attributes exposing (value)
+import Html exposing (Html, form, label, input, text)
 import Dict exposing (Dict)
-
-replace : String -> String
-replace input = 
-  String.reverse input
+import List exposing (map)
+import Msg exposing (Msg)
 
 
--- VIEW
-
-view : Dict String String -> Html String
-view cypher =
-  div []
-    [ h5 [] [ text "Alphabet"]
-    , input [ placeholder "a" ] []
-    ]
+alphabetForm : Dict Char Char -> Html Msg
+alphabetForm cypher =
+  form [] (map (\k -> mapKeyValuePairToInput k (Dict.get k cypher)) (Dict.keys cypher))
     
+mapKeyValuePairToInput : Char -> Maybe Char -> Html msg
+mapKeyValuePairToInput k v =
+  label []
+    [ text (String.fromChar k)
+    , input [ value (
+        case v of
+          Just value -> String.fromChar value
+          Nothing -> ""
+      ) ] []
+    ]
