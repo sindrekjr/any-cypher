@@ -21,6 +21,7 @@ translate cypher input =
 all : List Cypher
 all = 
   [ { name = "Al Bhed", cypher = albhed }
+  , { name = "Caesar", cypher = caesar }
   ]
 
 getRandomCypher : Cypher
@@ -57,5 +58,36 @@ albhed =
   , ('w','f')
   , ('x','q')
   , ('y','o')
+  , ('z','w')
+  ]
+
+caesar : Dict Char Char
+caesar =
+  Dict.fromList
+  [ ('a','x')
+  , ('b','y')
+  , ('c','z')
+  , ('d','a')
+  , ('e','b')
+  , ('f','c')
+  , ('g','d')
+  , ('h','e')
+  , ('i','f')
+  , ('j','g')
+  , ('k','h')
+  , ('l','i')
+  , ('m','j')
+  , ('n','k')
+  , ('o','l')
+  , ('p','m')
+  , ('q','n')
+  , ('r','o')
+  , ('s','p')
+  , ('t','q')
+  , ('u','r')
+  , ('v','s')
+  , ('w','t')
+  , ('x','u')
+  , ('y','v')
   , ('z','w')
   ]

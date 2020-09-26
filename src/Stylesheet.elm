@@ -6,17 +6,12 @@ import Html.Attributes exposing (attribute)
 
 stylesheet : Html msg
 stylesheet =
-    let
-        tag =
+    let tag =
             "link"
-
         attrs =
             [ attribute "rel" "stylesheet"
-            , attribute "property" "stylesheet"
-            , attribute "href" "/css/stylesheet.css"
+            , attribute "href" "/styles.css"
             ]
-
         children =
             []
-    in
-        node tag attrs children
+    in node tag attrs children
