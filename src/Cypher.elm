@@ -1,7 +1,13 @@
-module Cypher exposing (albhed, translate)
+module Cypher exposing (Cypher, albhed, all, getRandomCypher, translate)
 
 import Dict exposing (Dict)
+import List exposing (head)
 
+
+type alias Cypher =
+  { name : String
+  , cypher : Dict Char Char
+  }
 
 translate : Dict Char Char -> String -> String
 translate cypher input =
@@ -11,6 +17,17 @@ translate cypher input =
       Just value -> value
       Nothing -> c
   ) input
+
+all : List Cypher
+all = 
+  [ { name = "Al Bhed", cypher = albhed }
+  ]
+
+getRandomCypher : Cypher
+getRandomCypher = 
+  case head all of 
+    Just value -> value
+    Nothing -> { name = "Empty", cypher = Dict.fromList [] }
 
 albhed : Dict Char Char
 albhed = 
