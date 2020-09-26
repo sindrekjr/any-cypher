@@ -1,7 +1,7 @@
 module Main exposing(main)
 
 import Browser
-import Html exposing (Html, Attribute, div, input, text)
+import Html exposing (Html, Attribute, div, input, text, textarea)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 import Alphabet exposing (replace)
@@ -20,7 +20,8 @@ main =
 -- MODEL
 
 type alias Model =
-  { content : String
+  { input : String
+  , output : String
   , cypher : Dict Char Char
   , cyphers : List (Dict Char Char)
   }
@@ -28,7 +29,8 @@ type alias Model =
 
 init : Model
 init =
-  { content = ""
+  { input = ""
+  , output = ""
   , cypher = albhed
   , cyphers = [albhed]
   }
@@ -38,14 +40,21 @@ init =
 -- UPDATE
 
 type Msg
-  = Change String
+  = ChangeIn String | ChangeOut String
 
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Change newContent ->
-      { model | content = newContent }
+    ChangeIn newInput ->
+      { model
+      | input = newInput
+      , output = translate model.cypher newInput
+      }
+    ChangeOut newOutput ->
+      { model
+      | output = newOutput
+      }
 
 
 
@@ -54,6 +63,6 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div []
-    [ input [ placeholder "Text to translate", value model.content, onInput Change ] []
-    , div [] [ text (translate model.cypher model.content) ]
+    [ textarea [ placeholder "Text to translate", value model.input, onInput ChangeIn ] []
+    , textarea [ value model.output, onInput ChangeOut ] []
     ]
