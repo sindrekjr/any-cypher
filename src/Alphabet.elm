@@ -1,6 +1,8 @@
 module Alphabet exposing (replace, view)
+
 import Html.Attributes exposing (placeholder)
-import Html exposing (div, h5, input, text)
+import Html exposing (Html, div, h5, input, text)
+import Dict exposing (Dict)
 
 replace : String -> String
 replace input = 
@@ -9,7 +11,8 @@ replace input =
 
 -- VIEW
 
-view =
+view : Dict String String -> Html String
+view cypher =
   div []
     [ h5 [] [ text "Alphabet"]
     , input [ placeholder "a" ] []
