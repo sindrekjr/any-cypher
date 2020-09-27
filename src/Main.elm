@@ -1,7 +1,7 @@
 module Main exposing(main)
 
 
-import Browser
+import Browser exposing (Document)
 import Html exposing (Html, div, h1, input, nav, section, text, textarea)
 import Html.Attributes exposing (autofocus, class, hidden, id, placeholder, readonly, type_, value)
 import Html.Events exposing (onClick, onInput)
@@ -18,7 +18,7 @@ import Stylesheet exposing (stylesheet)
 -- MAIN
 main : Program () Model Msg
 main =
-  Browser.sandbox { init = init, update = update, view = view }
+  Browser.document { init = init, update = update, view = view, subscriptions = subscriptions }
 
 
 
@@ -30,64 +30,88 @@ type alias Model =
   , allCyphers : List CypherInfo
   }
 
-init : Model
-init =
-  { input = ""
-  , output = ""
-  , cypher = getRandomCypher
-  , allCyphers = all
-  }
+init : flags -> (Model, Cmd Msg)
+init _ =
+  ( { input = ""
+    , output = ""
+    , cypher = getRandomCypher
+    , allCyphers = all
+    }
+  , Cmd.none
+  )
 
 
 
 -- UPDATE
-update : Msg -> Model -> Model
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     Write newInput ->
-      { model
-      | input = newInput
-      , output = translate model.cypher.cypher newInput
-      }
+      ( { model
+        | input = newInput
+        , output = translate model.cypher.cypher newInput
+        }
+      , Cmd.none
+      )
     Select newCypher ->
-      { model
-      | cypher = newCypher
-      }
+      ( { model
+        | cypher = newCypher
+        }
+      , Cmd.none
+      )
     ChangeCypher key newValue ->
-      { model
-      | cypher = updateCypher model.cypher key newValue
-      }
+      ( { model
+        | cypher = updateCypher model.cypher key newValue
+        }
+      , Cmd.none
+      )
     ChangeName newName ->
-      { model
-      | cypher = updateCypherName newName model.cypher
-      }
+      ( { model
+        | cypher = updateCypherName newName model.cypher
+        }
+      , Cmd.none
+      )
     SaveCypher newCypher ->
-      { model
-      | allCyphers = append model.allCyphers [{ newCypher | pure = True }]
-      }
+      ( { model
+        | allCyphers = append model.allCyphers [{ newCypher | pure = True }]
+        }
+      , Cmd.none
+      )
+
+
+
+-- SUBSCRIPTIONS
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+  Sub.none
 
 
 
 -- VIEW
-view : Model -> Html Msg
+view : Model -> Document Msg
 view model =
-  div [ class "wrapper" ]
-    [ stylesheet
-    , section [ class "left" ] 
-      [ h1 [ class "title"] [ text "Anycypher" ]
-      , nav [] 
-        (map (\cypher -> 
-          input [ class "select", type_ "button", value cypher.name, onClick (Select cypher) ] [] ) model.allCyphers)
-      ]
-    , section [ class "right" ]
-        [ section [ class "top" ]
-          [ inputField model
-          , outputField model.input model.cypher
+  { title = "Anycypher"
+  , body = 
+      [ div [ class "wrapper" ]
+          [ stylesheet
+          , section [ class "left" ] 
+            [ h1 [ class "title"] [ text "Anycypher" ]
+            , nav [] 
+              (map (\cypher -> 
+                input [ class "select", type_ "button", value cypher.name, onClick (Select cypher) ] [] ) model.allCyphers)
+            ]
+          , section [ class "right" ]
+              [ section [ class "top" ]
+                [ inputField model
+                , outputField model.input model.cypher
+                ]
+              , section [ class "bottom" ]
+                [ alphabetForm model.cypher.cypher ]
+              ]
           ]
-        , section [ class "bottom" ]
-          [ alphabetForm model.cypher.cypher ]
-        ]
-    ]
+      ]
+  }
+  
 
 
 
