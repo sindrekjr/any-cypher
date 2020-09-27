@@ -1,0 +1,10 @@
+name: elm
+
+on: push
+
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: justgook/setup-elm@1.2.0
+    - run: elm make src/Main.elm
