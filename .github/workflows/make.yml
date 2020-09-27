@@ -7,5 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
     - uses: justgook/setup-elm@1.2.0
-    - run: elm make src/Main.elm
+    - run: elm make src/Main.elm --optimize --output=dist/index.html
+    - run: mv styles.css dist/styles.css
+    - uses: JamesIves/github-pages-deploy-action@3.6.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: dist
