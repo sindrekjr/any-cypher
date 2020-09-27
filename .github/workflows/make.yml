@@ -6,5 +6,6 @@ jobs:
   make:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - uses: justgook/setup-elm@1.2.0
     - run: elm make src/Main.elm
