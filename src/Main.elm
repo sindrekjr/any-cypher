@@ -81,14 +81,14 @@ cypherNav cyphers =
 
 inputField : Model -> Html Msg
 inputField model =
-  div []
+  div [ class "textarea-wrapper" ]
     [ input [ value "English", readonly True ] []
     , textarea [ autofocus True, placeholder "Text to translate", value model.input, onInput Change] []
     ]
 
 outputField : String -> Cypher -> Html Msg
 outputField inp cypher =
-  div []
+  div [ class "textarea-wrapper" ]
     [ input [ id "name", value cypher.name, readonly True ] []
     , textarea [ value (translate cypher.cypher inp), readonly True ] []
     ]

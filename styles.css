@@ -1,5 +1,6 @@
 html, body {
   background-color: lightgray;
+  font-family: monospace;
   display: flex;
   height: 100%;
   width: 100%;
@@ -14,18 +15,67 @@ div.wrapper {
   width: 100%;
 }
 
-section.left {
-  background-color: gray;
+section.left, section.right, nav {
   display: flex;
   flex-direction: column;
+  padding: 6px;
+}
+
+section.left {
+  background-color: gray;
   justify-content: flex-start;
   align-items: center;
   width: 200px;
-  padding: 5px;
 }
 
-nav {
+section.right {
+  justify-content: flex-start;
+}
+
+section.top, section.bottom {
+  display: flex;
+  flex-direction: row;
+  max-width: 1600px;
+}
+
+section.top {
+  flex-wrap: wrap;
+}
+
+section.bottom {
+  padding: 6px;
+}
+
+div.textarea-wrapper {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  height: 200px;
+  padding: 6px;
+}
+
+input {
+  border: 0;
+  font-size: 12px;
+}
+
+input[readonly] {
+  background: lightgray none repeat scroll 0% 0%;
+}
+
+textarea {
+  height: 100%;
+  resize: none;
+}
+
+label.character {
+  display: inline-block;
+  width: 50px;
+  margin: 0 5px;
+}
+
+label.character input {
+  height: 15px;
+  width: 25px;
+  margin: 5px;
 }

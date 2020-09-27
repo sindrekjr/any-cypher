@@ -6,6 +6,7 @@ import List exposing (head)
 
 type alias Cypher =
   { name : String
+  , pure : Bool
   , cypher : Dict Char Char
   }
 
@@ -20,15 +21,15 @@ translate cypher input =
 
 all : List Cypher
 all = 
-  [ { name = "Al Bhed", cypher = albhed }
-  , { name = "Caesar", cypher = caesar }
+  [ { name = "Al Bhed", pure = True, cypher = albhed }
+  , { name = "Caesar", pure = True, cypher = caesar }
   ]
 
 getRandomCypher : Cypher
 getRandomCypher = 
   case head all of 
     Just value -> value
-    Nothing -> { name = "Empty", cypher = Dict.fromList [] }
+    Nothing -> { name = "Empty", pure = False, cypher = Dict.fromList [] }
 
 albhed : Dict Char Char
 albhed = 
