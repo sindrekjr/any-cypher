@@ -1,12 +1,16 @@
 module Alphabet exposing (alphabetForm)
 
+
 import Html exposing (Html, form, label, input, text)
 import Html.Attributes exposing (class, value)
 import Html.Events exposing (onInput)
 import Dict exposing (get, keys)
 import List exposing (map)
-import Msg exposing (Msg(..))
+
+-- Modules
 import Cypher exposing (Cypher)
+import Msg exposing (Msg(..))
+
 
 
 alphabetForm : Cypher -> Html Msg

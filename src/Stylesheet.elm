@@ -4,14 +4,14 @@ import Html exposing (Html, node)
 import Html.Attributes exposing (attribute)
 
 
+
 stylesheet : Html msg
 stylesheet =
-    let tag =
-            "link"
-        attrs =
-            [ attribute "rel" "stylesheet"
-            , attribute "href" "/styles.css"
-            ]
-        children =
-            []
+  let tag = "link"
+      attrs =
+        [ attribute "rel" "stylesheet"
+        , attribute "href" "/styles.css"
+        ]
+      children =
+        []
     in node tag attrs children

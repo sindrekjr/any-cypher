@@ -1,19 +1,20 @@
 module Cypher 
-  exposing (
-    Cypher,
-    CypherInfo,
-    albhed,
-    all,
-    getRandomCypher,
-    updateCypher,
-    updateCypherName,
-    translate
-  )
+  exposing 
+    ( Cypher
+    , CypherInfo
+    , albhed
+    , all
+    , getRandomCypher
+    , updateCypher
+    , updateCypherName
+    , translate
+    )
 
+
+import Char exposing (isUpper, toLower)
 import Dict exposing (Dict)
 import List exposing (head)
 import String exposing (dropLeft, fromChar, toList, toUpper)
-import Char exposing (isUpper, toLower)
 
 
 

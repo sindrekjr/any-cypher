@@ -18,7 +18,18 @@ div.wrapper {
 section.left, section.right, nav {
   display: flex;
   flex-direction: column;
+  width: 100%;
   padding: 6px;
+}
+
+input.select {
+  padding: 2px;
+  margin: 4px 0;
+}
+
+input.select:hover {
+  cursor: pointer;
+  background-color: #ccc;
 }
 
 section.left {
@@ -54,12 +65,23 @@ div.textarea-wrapper {
   padding: 6px;
 }
 
+div.textarea-head {
+  display: flex;
+  height: 25px;
+}
+
+div.textarea-head input[type=button] {
+  margin: 0 4px;
+}
+
 input {
-  border: 0;
+  border: 1px solid #aaa;
+  border-radius: 3px;
   font-size: 12px;
 }
 
 input[readonly] {
+  border: 1px solid transparent;
   background: lightgray none repeat scroll 0% 0%;
 }
 

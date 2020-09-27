@@ -1,15 +1,18 @@
 module Main exposing(main)
 
+
 import Browser
-import Html exposing (Html, button, div, h1, input, nav, section, text, textarea)
+import Html exposing (Html, div, h1, input, nav, section, text, textarea)
 import Html.Attributes exposing (autofocus, class, hidden, id, placeholder, readonly, type_, value)
 import Html.Events exposing (onClick, onInput)
 import List exposing (append, map)
+
+-- Modules
 import Alphabet exposing (alphabetForm)
 import Cypher exposing (CypherInfo, all, getRandomCypher, updateCypher, updateCypherName, translate)
 import Msg exposing (Msg(..))
 import Stylesheet exposing (stylesheet)
-import Cypher exposing (Cypher)
+
 
 
 -- MAIN
@@ -72,7 +75,9 @@ view model =
     [ stylesheet
     , section [ class "left" ] 
       [ h1 [ class "title"] [ text "Anycypher" ]
-      , cypherNav model.allCyphers
+      , nav [] 
+        (map (\cypher -> 
+          input [ class "select", type_ "button", value cypher.name, onClick (Select cypher) ] [] ) model.allCyphers)
       ]
     , section [ class "right" ]
         [ section [ class "top" ]
@@ -84,12 +89,6 @@ view model =
         ]
     ]
 
-
-
--- NAV
-cypherNav : List CypherInfo -> Html Msg
-cypherNav cyphers =
-  nav [] (map (\cypher -> button [ onClick (Select cypher) ] [ text cypher.name ] ) cyphers)
 
 
 inputField : Model -> Html Msg
