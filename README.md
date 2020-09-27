@@ -1,15 +1,5 @@
-# any-cypher
-##### What? 
-Web application. 
-#### Why? 
-Seamlessly translate any cypher any way whenever. 
-### How? 
-* Open [index.html](https://sindrekjr.github.io/any-cypher/)
-* Write text
-* Get text.
+# Anycypher
+Web application written in Elm for translating any cypher on the fly. Deployed [here](sindrekjr.github.io/anycypher).
 
-## Development
-Minor and under sporadic construction. 
-
-## Contributing
-Sure! 
+## Features
+* [Elm](https://elm-lang.org/).
