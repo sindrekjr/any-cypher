@@ -13,13 +13,13 @@ alphabetForm : Cypher -> Html Msg
 alphabetForm cypher =
   form [ class "alphabet" ] (map (\k -> mapKeyValuePairToInput k (get k cypher)) (keys cypher))
     
-mapKeyValuePairToInput : Char -> Maybe Char -> Html Msg
+mapKeyValuePairToInput : Char -> Maybe String -> Html Msg
 mapKeyValuePairToInput k v =
   label [ class "character" ]
     [ text (String.fromChar k)
     , input [ value (
         case v of
-          Just value -> String.fromChar value
+          Just value -> value
           Nothing -> ""
-      ), onInput Change ] []
+      ), onInput (\c -> Change k c) ] []
     ]

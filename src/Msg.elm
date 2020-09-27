@@ -4,4 +4,4 @@ import Cypher exposing (CypherInfo)
 
 
 type Msg
-  = Write String | Select CypherInfo | Change String
+  = Write String | Select CypherInfo | Change Char String

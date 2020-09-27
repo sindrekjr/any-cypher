@@ -49,9 +49,9 @@ update msg model =
       { model
       | cypher = newCypher
       }
-    Change newValue ->
+    Change key newValue ->
       { model
-      | cypher = updateCypher model.cypher newValue
+      | cypher = updateCypher model.cypher key newValue
       }
 
 
@@ -93,6 +93,6 @@ inputField model =
 outputField : String -> CypherInfo -> Html Msg
 outputField inp cypher =
   div [ class "textarea-wrapper" ]
-    [ input [ id "name", value cypher.name, readonly True ] []
+    [ input [ id "name", value cypher.name, readonly cypher.pure ] []
     , textarea [ value (translate cypher.cypher inp), readonly True ] []
     ]
