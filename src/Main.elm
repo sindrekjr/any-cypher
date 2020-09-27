@@ -60,7 +60,7 @@ update msg model =
       }
     SaveCypher newCypher ->
       { model
-      | allCyphers = append model.allCyphers [newCypher]
+      | allCyphers = append model.allCyphers [{ newCypher | pure = True }]
       }
 
 
