@@ -1,4 +1,14 @@
-module Cypher exposing (Cypher, CypherInfo, albhed, all, getRandomCypher, updateCypher, translate)
+module Cypher 
+  exposing (
+    Cypher,
+    CypherInfo,
+    albhed,
+    all,
+    getRandomCypher,
+    updateCypher,
+    updateCypherName,
+    translate
+  )
 
 import Dict exposing (Dict)
 import List exposing (head)
@@ -32,6 +42,11 @@ updateCypher cypher key str =
   , pure = False
   }
 
+updateCypherName : String -> CypherInfo -> CypherInfo
+updateCypherName newName cypher =
+  { cypher
+  | name = newName
+  }
 
 all : List CypherInfo
 all = 

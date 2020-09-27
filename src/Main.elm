@@ -2,13 +2,14 @@ module Main exposing(main)
 
 import Browser
 import Html exposing (Html, button, div, h1, input, nav, section, text, textarea)
-import Html.Attributes exposing (autofocus, class, id, placeholder, readonly, value)
+import Html.Attributes exposing (autofocus, class, hidden, id, placeholder, readonly, type_, value)
 import Html.Events exposing (onClick, onInput)
-import List exposing (map)
+import List exposing (append, map)
 import Alphabet exposing (alphabetForm)
-import Cypher exposing (CypherInfo, all, getRandomCypher, updateCypher, translate)
+import Cypher exposing (CypherInfo, all, getRandomCypher, updateCypher, updateCypherName, translate)
 import Msg exposing (Msg(..))
 import Stylesheet exposing (stylesheet)
+import Cypher exposing (Cypher)
 
 
 -- MAIN
@@ -49,9 +50,17 @@ update msg model =
       { model
       | cypher = newCypher
       }
-    Change key newValue ->
+    ChangeCypher key newValue ->
       { model
       | cypher = updateCypher model.cypher key newValue
+      }
+    ChangeName newName ->
+      { model
+      | cypher = updateCypherName newName model.cypher
+      }
+    SaveCypher newCypher ->
+      { model
+      | allCyphers = append model.allCyphers [newCypher]
       }
 
 
@@ -86,13 +95,16 @@ cypherNav cyphers =
 inputField : Model -> Html Msg
 inputField model =
   div [ class "textarea-wrapper" ]
-    [ input [ value "English", readonly True ] []
+    [ div [ class "textarea-head" ] [ input [ value "English", readonly True ] [] ]
     , textarea [ autofocus True, placeholder "Text to translate", value model.input, onInput Write] []
     ]
 
 outputField : String -> CypherInfo -> Html Msg
 outputField inp cypher =
   div [ class "textarea-wrapper" ]
-    [ input [ id "name", value cypher.name, readonly cypher.pure ] []
+    [ div [ class "textarea-head" ] 
+      [ input [ id "name", value cypher.name, readonly cypher.pure, onInput ChangeName ] []
+      , input [ type_ "button", value "Save", hidden cypher.pure, onClick (SaveCypher cypher) ] []
+      ]
     , textarea [ value (translate cypher.cypher inp), readonly True ] []
     ]

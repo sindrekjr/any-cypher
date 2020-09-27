@@ -21,5 +21,5 @@ mapKeyValuePairToInput k v =
         case v of
           Just value -> value
           Nothing -> ""
-      ), onInput (\c -> Change k c) ] []
+      ), onInput (\c -> ChangeCypher k c) ] []
     ]
