@@ -11,7 +11,7 @@ jobs:
         persist-credentials: false
     - uses: justgook/setup-elm@1.2.0
     - run: elm make src/Main.elm --optimize --output=dist/index.html
-    - run: mv styles.css dist/styles.css
+    - run: mv src/css dist/css
     - uses: JamesIves/github-pages-deploy-action@3.6.1
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

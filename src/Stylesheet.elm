@@ -10,7 +10,7 @@ stylesheet =
   let tag = "link"
       attrs =
         [ attribute "rel" "stylesheet"
-        , attribute "href" "/styles.css"
+        , attribute "href" "css/styles.css"
         ]
       children =
         []
