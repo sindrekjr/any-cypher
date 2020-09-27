@@ -1,17 +1,19 @@
 module Alphabet exposing (alphabetForm)
 
-import Html.Attributes exposing (class, value)
 import Html exposing (Html, form, label, input, text)
-import Dict exposing (Dict)
+import Html.Attributes exposing (class, value)
+import Html.Events exposing (onInput)
+import Dict exposing (get, keys)
 import List exposing (map)
-import Msg exposing (Msg)
+import Msg exposing (Msg(..))
+import Cypher exposing (Cypher)
 
 
-alphabetForm : Dict Char Char -> Html Msg
+alphabetForm : Cypher -> Html Msg
 alphabetForm cypher =
-  form [ class "alphabet" ] (map (\k -> mapKeyValuePairToInput k (Dict.get k cypher)) (Dict.keys cypher))
+  form [ class "alphabet" ] (map (\k -> mapKeyValuePairToInput k (get k cypher)) (keys cypher))
     
-mapKeyValuePairToInput : Char -> Maybe Char -> Html msg
+mapKeyValuePairToInput : Char -> Maybe Char -> Html Msg
 mapKeyValuePairToInput k v =
   label [ class "character" ]
     [ text (String.fromChar k)
@@ -19,5 +21,5 @@ mapKeyValuePairToInput k v =
         case v of
           Just value -> String.fromChar value
           Nothing -> ""
-      ) ] []
+      ), onInput Change ] []
     ]

@@ -1,16 +1,19 @@
-module Cypher exposing (Cypher, albhed, all, getRandomCypher, translate)
+module Cypher exposing (Cypher, CypherInfo, albhed, all, getRandomCypher, updateCypher, translate)
 
 import Dict exposing (Dict)
 import List exposing (head)
 
 
-type alias Cypher =
+
+type alias Cypher = Dict Char Char
+
+type alias CypherInfo =
   { name : String
   , pure : Bool
-  , cypher : Dict Char Char
+  , cypher : Cypher
   }
 
-translate : Dict Char Char -> String -> String
+translate : Cypher -> String -> String
 translate cypher input =
   String.map 
   ( \c -> 
@@ -19,19 +22,23 @@ translate cypher input =
       Nothing -> c
   ) input
 
-all : List Cypher
+updateCypher : CypherInfo -> String -> CypherInfo
+updateCypher cypher str = cypher
+
+
+all : List CypherInfo
 all = 
   [ { name = "Al Bhed", pure = True, cypher = albhed }
   , { name = "Caesar", pure = True, cypher = caesar }
   ]
 
-getRandomCypher : Cypher
+getRandomCypher : CypherInfo
 getRandomCypher = 
   case head all of 
     Just value -> value
     Nothing -> { name = "Empty", pure = False, cypher = Dict.fromList [] }
 
-albhed : Dict Char Char
+albhed : Cypher
 albhed = 
   Dict.fromList
   [ ('a','y')
@@ -62,7 +69,7 @@ albhed =
   , ('z','w')
   ]
 
-caesar : Dict Char Char
+caesar : Cypher
 caesar =
   Dict.fromList
   [ ('a','x')

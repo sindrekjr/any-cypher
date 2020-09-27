@@ -6,7 +6,7 @@ import Html.Attributes exposing (autofocus, class, id, placeholder, readonly, va
 import Html.Events exposing (onClick, onInput)
 import List exposing (map)
 import Alphabet exposing (alphabetForm)
-import Cypher exposing (Cypher, all, getRandomCypher, translate)
+import Cypher exposing (CypherInfo, all, getRandomCypher, updateCypher, translate)
 import Msg exposing (Msg(..))
 import Stylesheet exposing (stylesheet)
 
@@ -22,8 +22,8 @@ main =
 type alias Model =
   { input : String
   , output : String
-  , cypher : Cypher
-  , allCyphers : List Cypher
+  , cypher : CypherInfo
+  , allCyphers : List CypherInfo
   }
 
 init : Model
@@ -40,7 +40,7 @@ init =
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Change newInput ->
+    Write newInput ->
       { model
       | input = newInput
       , output = translate model.cypher.cypher newInput
@@ -48,6 +48,10 @@ update msg model =
     Select newCypher ->
       { model
       | cypher = newCypher
+      }
+    Change newValue ->
+      { model
+      | cypher = updateCypher model.cypher newValue
       }
 
 
@@ -74,7 +78,7 @@ view model =
 
 
 -- NAV
-cypherNav : List Cypher -> Html Msg
+cypherNav : List CypherInfo -> Html Msg
 cypherNav cyphers =
   nav [] (map (\cypher -> button [ onClick (Select cypher) ] [ text cypher.name ] ) cyphers)
 
@@ -83,10 +87,10 @@ inputField : Model -> Html Msg
 inputField model =
   div [ class "textarea-wrapper" ]
     [ input [ value "English", readonly True ] []
-    , textarea [ autofocus True, placeholder "Text to translate", value model.input, onInput Change] []
+    , textarea [ autofocus True, placeholder "Text to translate", value model.input, onInput Write] []
     ]
 
-outputField : String -> Cypher -> Html Msg
+outputField : String -> CypherInfo -> Html Msg
 outputField inp cypher =
   div [ class "textarea-wrapper" ]
     [ input [ id "name", value cypher.name, readonly True ] []
