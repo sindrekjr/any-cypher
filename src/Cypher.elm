@@ -2,7 +2,8 @@ module Cypher exposing (Cypher, CypherInfo, albhed, all, getRandomCypher, update
 
 import Dict exposing (Dict)
 import List exposing (head)
-import String exposing (dropLeft, toList)
+import String exposing (dropLeft, fromChar, toList, toUpper)
+import Char exposing (isUpper, toLower)
 
 
 
@@ -18,9 +19,10 @@ translate : Cypher -> String -> String
 translate cypher input =
   case head (toList input) of
     Just character -> 
-      case Dict.get character cypher of
-        Just value -> value ++ translate cypher (dropLeft 1 input)
-        Nothing -> "" ++ translate cypher (dropLeft 1 input)
+      case Dict.get (toLower character) cypher of
+        Just value ->
+          (if isUpper character then toUpper value else value) ++ translate cypher (dropLeft 1 input)
+        Nothing -> fromChar character ++ translate cypher (dropLeft 1 input)
     Nothing -> ""
 
 updateCypher : CypherInfo -> Char -> String -> CypherInfo
