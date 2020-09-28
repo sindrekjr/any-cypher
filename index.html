@@ -5670,6 +5670,7 @@ var $author$project$Main$inputField = function (model) {
 						$elm$html$Html$input,
 						_List_fromArray(
 							[
+								$elm$html$Html$Attributes$class('name'),
 								$elm$html$Html$Attributes$value('English'),
 								$elm$html$Html$Attributes$readonly(true)
 							]),
@@ -5711,7 +5712,6 @@ var $author$project$Msg$SaveCypher = function (a) {
 	return {$: 4, a: a};
 };
 var $elm$html$Html$Attributes$hidden = $elm$html$Html$Attributes$boolProperty('hidden');
-var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
 var $author$project$Main$outputField = F2(
 	function (inp, cypher) {
@@ -5735,7 +5735,7 @@ var $author$project$Main$outputField = F2(
 							$elm$html$Html$input,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$id('name'),
+									$elm$html$Html$Attributes$class('name'),
 									$elm$html$Html$Attributes$value(cypher.D),
 									$elm$html$Html$Attributes$readonly(cypher.E),
 									$elm$html$Html$Events$onInput($author$project$Msg$ChangeName)
@@ -5829,7 +5829,7 @@ var $author$project$Main$view = function (model) {
 											$elm$html$Html$input,
 											_List_fromArray(
 												[
-													$elm$html$Html$Attributes$class('select'),
+													_Utils_eq(cypher, model.v) ? $elm$html$Html$Attributes$class('selected') : $elm$html$Html$Attributes$class('select'),
 													$elm$html$Html$Attributes$type_('button'),
 													$elm$html$Html$Attributes$value(cypher.D),
 													$elm$html$Html$Events$onClick(
