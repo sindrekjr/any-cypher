@@ -98,7 +98,12 @@ view model =
             [ h1 [ class "title"] [ text "Anycypher" ]
             , nav [] 
               (map (\cypher -> 
-                input [ class "select", type_ "button", value cypher.name, onClick (Select cypher) ] [] ) model.allCyphers)
+                input 
+                [ if cypher == model.cypher then class "selected" else class "select"
+                , type_ "button"
+                , value cypher.name
+                , onClick (Select cypher)
+                ] [] ) model.allCyphers)
             ]
           , section [ class "right" ]
               [ section [ class "top" ]
@@ -118,7 +123,9 @@ view model =
 inputField : Model -> Html Msg
 inputField model =
   div [ class "textarea-wrapper" ]
-    [ div [ class "textarea-head" ] [ input [ value "English", readonly True ] [] ]
+    [ div [ class "textarea-head" ] 
+      [ input [ class "name", value "English", readonly True ] []
+      ]
     , textarea [ autofocus True, placeholder "Text to translate", value model.input, onInput Write] []
     ]
 
@@ -126,7 +133,7 @@ outputField : String -> CypherInfo -> Html Msg
 outputField inp cypher =
   div [ class "textarea-wrapper" ]
     [ div [ class "textarea-head" ] 
-      [ input [ id "name", value cypher.name, readonly cypher.pure, onInput ChangeName ] []
+      [ input [ class "name", value cypher.name, readonly cypher.pure, onInput ChangeName ] []
       , input [ type_ "button", value "Save", hidden cypher.pure, onClick (SaveCypher cypher) ] []
       ]
     , textarea [ value (translate cypher.cypher inp), readonly True ] []

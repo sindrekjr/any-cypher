@@ -2,7 +2,6 @@ module Cypher
   exposing 
     ( Cypher
     , CypherInfo
-    , albhed
     , all
     , getRandomCypher
     , updateCypher
