@@ -19,11 +19,15 @@ section.left, section.right, nav {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 12px 6px;
+  padding: 1.2em 0.6em;
 }
 
 .title {
   font-family: sans-serif,Apple Color Emoji,Segoe UI Emoji;
+}
+
+nav {
+  padding-top: 0;
 }
 
 input.select, input.selected {
