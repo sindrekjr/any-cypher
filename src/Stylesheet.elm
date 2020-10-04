@@ -1,4 +1,6 @@
-module Stylesheet exposing (stylesheet)
+module Stylesheet 
+  exposing 
+    ( stylesheet )
 
 import Html exposing (Html, node)
 import Html.Attributes exposing (attribute)

@@ -1,7 +1,9 @@
-module Alphabet exposing (alphabetForm)
+module Alphabet 
+  exposing 
+    ( form )
 
 
-import Html exposing (Html, form, label, input, text)
+import Html exposing (Html, label, input, text)
 import Html.Attributes exposing (class, value)
 import Html.Events exposing (onInput)
 import Dict exposing (get, keys)
@@ -13,9 +15,9 @@ import Msg exposing (Msg(..))
 
 
 
-alphabetForm : Cypher -> Html Msg
-alphabetForm cypher =
-  form [ class "alphabet" ] (map (\k -> mapKeyValuePairToInput k (get k cypher)) (keys cypher))
+form : Cypher -> Html Msg
+form cypher =
+  Html.form [ class "alphabet" ] (map (\k -> mapKeyValuePairToInput k (get k cypher.subs)) (keys cypher.subs))
     
 mapKeyValuePairToInput : Char -> Maybe String -> Html Msg
 mapKeyValuePairToInput k v =

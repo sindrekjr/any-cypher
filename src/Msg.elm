@@ -1,14 +1,16 @@
-module Msg exposing (Msg(..))
+module Msg 
+  exposing 
+    ( Msg(..) )
 
 
 -- Modules
-import Cypher exposing (CypherInfo)
+import Cypher exposing (Cypher)
 
 
 
 type Msg
   = Write String
-  | Select CypherInfo
+  | Select Cypher
   | ChangeCypher Char String
   | ChangeName String
-  | SaveCypher CypherInfo
+  | Save Cypher

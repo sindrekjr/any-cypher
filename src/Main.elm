@@ -1,15 +1,15 @@
-module Main exposing(main)
+module Main exposing (main)
 
 
 import Browser exposing (Document)
 import Html exposing (Html, div, h1, input, nav, section, text, textarea)
-import Html.Attributes exposing (autofocus, class, hidden, id, placeholder, readonly, type_, value)
+import Html.Attributes exposing (autofocus, class, hidden, placeholder, readonly, type_, value)
 import Html.Events exposing (onClick, onInput)
 import List exposing (append, map)
 
 -- Modules
-import Alphabet exposing (alphabetForm)
-import Cypher exposing (CypherInfo, all, getRandomCypher, updateCypher, updateCypherName, translate)
+import Alphabet exposing (form)
+import Cypher exposing (Cypher, substitute)
 import Msg exposing (Msg(..))
 import Stylesheet exposing (stylesheet)
 
@@ -26,16 +26,16 @@ main =
 type alias Model =
   { input : String
   , output : String
-  , cypher : CypherInfo
-  , allCyphers : List CypherInfo
+  , cypher : Cypher
+  , allCyphers : List Cypher
   }
 
 init : flags -> (Model, Cmd Msg)
 init _ =
   ( { input = ""
     , output = ""
-    , cypher = getRandomCypher
-    , allCyphers = all
+    , cypher = Cypher.random
+    , allCyphers = Cypher.all
     }
   , Cmd.none
   )
@@ -49,7 +49,7 @@ update msg model =
     Write newInput ->
       ( { model
         | input = newInput
-        , output = translate model.cypher.cypher newInput
+        , output = substitute model.cypher newInput
         }
       , Cmd.none
       )
@@ -61,17 +61,17 @@ update msg model =
       )
     ChangeCypher key newValue ->
       ( { model
-        | cypher = updateCypher model.cypher key newValue
+        | cypher = Cypher.change model.cypher key newValue
         }
       , Cmd.none
       )
     ChangeName newName ->
       ( { model
-        | cypher = updateCypherName newName model.cypher
+        | cypher = Cypher newName model.cypher.pure model.cypher.subs
         }
       , Cmd.none
       )
-    SaveCypher newCypher ->
+    Save newCypher ->
       ( { model
         | allCyphers = append model.allCyphers [{ newCypher | pure = True }]
         }
@@ -111,7 +111,7 @@ view model =
                 , outputField model.input model.cypher
                 ]
               , section [ class "bottom" ]
-                [ alphabetForm model.cypher.cypher ]
+                [ form model.cypher ]
               ]
           ]
       ]
@@ -129,12 +129,12 @@ inputField model =
     , textarea [ autofocus True, placeholder "Text to translate", value model.input, onInput Write] []
     ]
 
-outputField : String -> CypherInfo -> Html Msg
+outputField : String -> Cypher -> Html Msg
 outputField inp cypher =
   div [ class "textarea-wrapper" ]
     [ div [ class "textarea-head" ] 
       [ input [ class "name", value cypher.name, readonly cypher.pure, onInput ChangeName ] []
-      , input [ type_ "button", value "Save", hidden cypher.pure, onClick (SaveCypher cypher) ] []
+      , input [ type_ "button", value "Save", hidden cypher.pure, onClick (Save cypher) ] []
       ]
-    , textarea [ value (translate cypher.cypher inp), readonly True ] []
+    , textarea [ value (substitute cypher inp), readonly True ] []
     ]
