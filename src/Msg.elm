@@ -11,6 +11,6 @@ import Cypher exposing (Cypher)
 type Msg
   = Write String
   | Select Cypher
-  | ChangeCypher Char String
+  | ChangeCypher String String
   | ChangeName String
   | Save Cypher

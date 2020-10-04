@@ -19,10 +19,10 @@ form : Cypher -> Html Msg
 form cypher =
   Html.form [ class "alphabet" ] (map (\k -> mapKeyValuePairToInput k (get k cypher.subs)) (keys cypher.subs))
     
-mapKeyValuePairToInput : Char -> Maybe String -> Html Msg
+mapKeyValuePairToInput : String -> Maybe String -> Html Msg
 mapKeyValuePairToInput k v =
   label [ class "character" ]
-    [ text (String.fromChar k)
+    [ text k
     , input [ value (
         case v of
           Just value -> value
