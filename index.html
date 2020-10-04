@@ -2718,7 +2718,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		o: func(record.o),
+		p: func(record.p),
 		P: record.P,
 		M: record.M
 	}
@@ -2988,7 +2988,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.o;
+		var message = !tag ? value : tag < 3 ? value.a : value.p;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.P;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -5337,9 +5337,11 @@ var $author$project$Cypher$caesar = $elm$core$Dict$fromList(
 		]));
 var $author$project$Cypher$all = _List_fromArray(
 	[
-		{v: $author$project$Cypher$albhed, D: 'Al Bhed', E: true},
-		{v: $author$project$Cypher$caesar, D: 'Caesar', E: true}
+		{I: 'Al Bhed', D: true, ak: $author$project$Cypher$albhed},
+		{I: 'Caesar', D: true, ak: $author$project$Cypher$caesar}
 	]);
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$List$head = function (list) {
 	if (list.b) {
 		var x = list.a;
@@ -5349,24 +5351,22 @@ var $elm$core$List$head = function (list) {
 		return $elm$core$Maybe$Nothing;
 	}
 };
-var $author$project$Cypher$getRandomCypher = function () {
+var $author$project$Cypher$random = function () {
 	var _v0 = $elm$core$List$head($author$project$Cypher$all);
 	if (!_v0.$) {
 		var value = _v0.a;
 		return value;
 	} else {
 		return {
-			v: $elm$core$Dict$fromList(_List_Nil),
-			D: 'Empty',
-			E: false
+			I: 'Empty',
+			D: false,
+			ak: $elm$core$Dict$fromList(_List_Nil)
 		};
 	}
 }();
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
-		{A: $author$project$Cypher$all, v: $author$project$Cypher$getRandomCypher, B: '', L: ''},
+		{A: $author$project$Cypher$all, g: $author$project$Cypher$random, B: '', L: ''},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -5374,6 +5374,10 @@ var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
+var $author$project$Cypher$Cypher = F3(
+	function (name, pure, subs) {
+		return {I: name, D: pure, ak: subs};
+	});
 var $elm$core$List$append = F2(
 	function (xs, ys) {
 		if (!ys.b) {
@@ -5381,6 +5385,15 @@ var $elm$core$List$append = F2(
 		} else {
 			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
 		}
+	});
+var $author$project$Cypher$change = F3(
+	function (cypher, key, str) {
+		return _Utils_update(
+			cypher,
+			{
+				D: false,
+				ak: A3($elm$core$Dict$insert, key, str, cypher.ak)
+			});
 	});
 var $elm$core$String$cons = _String_cons;
 var $elm$core$String$fromChar = function (_char) {
@@ -5421,9 +5434,9 @@ var $elm$core$String$foldr = _String_foldr;
 var $elm$core$String$toList = function (string) {
 	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
 };
-var $elm$core$Char$toLower = _Char_toLower;
+var $elm$core$String$toLower = _String_toLower;
 var $elm$core$String$toUpper = _String_toUpper;
-var $author$project$Cypher$translate = F2(
+var $author$project$Cypher$substitute = F2(
 	function (cypher, input) {
 		var _v0 = $elm$core$List$head(
 			$elm$core$String$toList(input));
@@ -5431,42 +5444,28 @@ var $author$project$Cypher$translate = F2(
 			var character = _v0.a;
 			var _v1 = A2(
 				$elm$core$Dict$get,
-				$elm$core$Char$toLower(character),
-				cypher);
+				$elm$core$String$toLower(
+					$elm$core$String$fromChar(character)),
+				cypher.ak);
 			if (!_v1.$) {
 				var value = _v1.a;
 				return _Utils_ap(
 					$elm$core$Char$isUpper(character) ? $elm$core$String$toUpper(value) : value,
 					A2(
-						$author$project$Cypher$translate,
+						$author$project$Cypher$substitute,
 						cypher,
 						A2($elm$core$String$dropLeft, 1, input)));
 			} else {
 				return _Utils_ap(
 					$elm$core$String$fromChar(character),
 					A2(
-						$author$project$Cypher$translate,
+						$author$project$Cypher$substitute,
 						cypher,
 						A2($elm$core$String$dropLeft, 1, input)));
 			}
 		} else {
 			return '';
 		}
-	});
-var $author$project$Cypher$updateCypher = F3(
-	function (cypher, key, str) {
-		return _Utils_update(
-			cypher,
-			{
-				v: A3($elm$core$Dict$insert, key, str, cypher.v),
-				E: false
-			});
-	});
-var $author$project$Cypher$updateCypherName = F2(
-	function (newName, cypher) {
-		return _Utils_update(
-			cypher,
-			{D: newName});
 	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
@@ -5478,7 +5477,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							B: newInput,
-							L: A2($author$project$Cypher$translate, model.v.v, newInput)
+							L: A2($author$project$Cypher$substitute, model.g, newInput)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 1:
@@ -5486,7 +5485,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{v: newCypher}),
+						{g: newCypher}),
 					$elm$core$Platform$Cmd$none);
 			case 2:
 				var key = msg.a;
@@ -5495,7 +5494,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							v: A3($author$project$Cypher$updateCypher, model.v, key, newValue)
+							g: A3($author$project$Cypher$change, model.g, key, newValue)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 3:
@@ -5504,7 +5503,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							v: A2($author$project$Cypher$updateCypherName, newName, model.v)
+							g: A3($author$project$Cypher$Cypher, newName, model.g.D, model.g.ak)
 						}),
 					$elm$core$Platform$Cmd$none);
 			default:
@@ -5520,7 +5519,7 @@ var $author$project$Main$update = F2(
 									[
 										_Utils_update(
 										newCypher,
-										{E: true})
+										{D: true})
 									]))
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -5538,6 +5537,7 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$form = _VirtualDom_node('form');
 var $author$project$Msg$ChangeCypher = F2(
 	function (a, b) {
@@ -5592,8 +5592,7 @@ var $author$project$Alphabet$mapKeyValuePairToInput = F2(
 				]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text(
-					$elm$core$String$fromChar(k)),
+					$elm$html$Html$text(k),
 					A2(
 					$elm$html$Html$input,
 					_List_fromArray(
@@ -5615,7 +5614,7 @@ var $author$project$Alphabet$mapKeyValuePairToInput = F2(
 					_List_Nil)
 				]));
 	});
-var $author$project$Alphabet$alphabetForm = function (cypher) {
+var $author$project$Alphabet$form = function (cypher) {
 	return A2(
 		$elm$html$Html$form,
 		_List_fromArray(
@@ -5628,11 +5627,10 @@ var $author$project$Alphabet$alphabetForm = function (cypher) {
 				return A2(
 					$author$project$Alphabet$mapKeyValuePairToInput,
 					k,
-					A2($elm$core$Dict$get, k, cypher));
+					A2($elm$core$Dict$get, k, cypher.ak));
 			},
-			$elm$core$Dict$keys(cypher)));
+			$elm$core$Dict$keys(cypher.ak)));
 };
-var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $author$project$Msg$Write = function (a) {
 	return {$: 0, a: a};
@@ -5708,7 +5706,7 @@ var $elm$html$Html$Events$onClick = function (msg) {
 var $author$project$Msg$ChangeName = function (a) {
 	return {$: 3, a: a};
 };
-var $author$project$Msg$SaveCypher = function (a) {
+var $author$project$Msg$Save = function (a) {
 	return {$: 4, a: a};
 };
 var $elm$html$Html$Attributes$hidden = $elm$html$Html$Attributes$boolProperty('hidden');
@@ -5736,8 +5734,8 @@ var $author$project$Main$outputField = F2(
 							_List_fromArray(
 								[
 									$elm$html$Html$Attributes$class('name'),
-									$elm$html$Html$Attributes$value(cypher.D),
-									$elm$html$Html$Attributes$readonly(cypher.E),
+									$elm$html$Html$Attributes$value(cypher.I),
+									$elm$html$Html$Attributes$readonly(cypher.D),
 									$elm$html$Html$Events$onInput($author$project$Msg$ChangeName)
 								]),
 							_List_Nil),
@@ -5747,9 +5745,9 @@ var $author$project$Main$outputField = F2(
 								[
 									$elm$html$Html$Attributes$type_('button'),
 									$elm$html$Html$Attributes$value('Save'),
-									$elm$html$Html$Attributes$hidden(cypher.E),
+									$elm$html$Html$Attributes$hidden(cypher.D),
 									$elm$html$Html$Events$onClick(
-									$author$project$Msg$SaveCypher(cypher))
+									$author$project$Msg$Save(cypher))
 								]),
 							_List_Nil)
 						])),
@@ -5758,7 +5756,7 @@ var $author$project$Main$outputField = F2(
 					_List_fromArray(
 						[
 							$elm$html$Html$Attributes$value(
-							A2($author$project$Cypher$translate, cypher.v, inp)),
+							A2($author$project$Cypher$substitute, cypher, inp)),
 							$elm$html$Html$Attributes$readonly(true)
 						]),
 					_List_Nil)
@@ -5829,9 +5827,9 @@ var $author$project$Main$view = function (model) {
 											$elm$html$Html$input,
 											_List_fromArray(
 												[
-													_Utils_eq(cypher, model.v) ? $elm$html$Html$Attributes$class('selected') : $elm$html$Html$Attributes$class('select'),
+													_Utils_eq(cypher, model.g) ? $elm$html$Html$Attributes$class('selected') : $elm$html$Html$Attributes$class('select'),
 													$elm$html$Html$Attributes$type_('button'),
-													$elm$html$Html$Attributes$value(cypher.D),
+													$elm$html$Html$Attributes$value(cypher.I),
 													$elm$html$Html$Events$onClick(
 													$author$project$Msg$Select(cypher))
 												]),
@@ -5856,7 +5854,7 @@ var $author$project$Main$view = function (model) {
 								_List_fromArray(
 									[
 										$author$project$Main$inputField(model),
-										A2($author$project$Main$outputField, model.B, model.v)
+										A2($author$project$Main$outputField, model.B, model.g)
 									])),
 								A2(
 								$elm$html$Html$section,
@@ -5866,7 +5864,7 @@ var $author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$author$project$Alphabet$alphabetForm(model.v.v)
+										$author$project$Alphabet$form(model.g)
 									]))
 							]))
 					]))
