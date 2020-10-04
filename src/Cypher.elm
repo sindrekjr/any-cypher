@@ -1,7 +1,7 @@
 module Cypher 
   exposing 
     ( Cypher
-    , Substitions
+    , Substitutions
     , all
     , random
     , change
@@ -19,10 +19,10 @@ import String exposing (dropLeft, fromChar, toList, toLower, toUpper)
 type alias Cypher =
   { name : String
   , pure : Bool
-  , subs : Substitions
+  , subs : Substitutions
   }
 
-type alias Substitions = Dict String String
+type alias Substitutions = Dict String String
 
 
 
@@ -60,7 +60,7 @@ substitute cypher input =
 
 
 -- EXAMPLES
-albhed : Substitions
+albhed : Substitutions
 albhed = 
   Dict.fromList
     [ ("a","y")
@@ -91,7 +91,7 @@ albhed =
     , ("z","w")
     ]
 
-caesar : Substitions
+caesar : Substitutions
 caesar =
   Dict.fromList
     [ ("a","x")
